@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070956670595",
+    "project_id": "final-3f830",
+    "storage_bucket": "final-3f830.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070956670595:android:b2d78d2874c17cc696f5b6",
+        "android_client_info": {
+          "package_name": "Draz.afinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVDJvUmrExFwTiGjKzxJOK_0-YM2z9gWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
