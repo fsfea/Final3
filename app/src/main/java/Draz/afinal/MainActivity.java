@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.itmAddTask) {
                     Toast.makeText(MainActivity.this, "Add", Toast.LENGTH_SHORT).show();
-                    ;
                     Intent i = new Intent(MainActivity.this, Add_Message_Activity.class);
                     startActivity(i);
                 }
