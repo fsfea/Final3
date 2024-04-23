@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         srchV = findViewById(R.id.srchV);
         spnrSubject = findViewById(R.id.spnrSubject);
         lstvTasks = findViewById(R.id.lstvTasks);
-//        alarmTimePicker =  findViewById(R.id.timePicker);
+      //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 

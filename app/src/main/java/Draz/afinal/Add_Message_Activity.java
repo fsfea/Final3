@@ -205,7 +205,8 @@ public class Add_Message_Activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(Add_Message_Activity.this, "Succeeded to Add profile", Toast.LENGTH_SHORT).show();
                     //SaveUser_FB(email ,name,phone,password);
-                    finish();
+                    Intent i = new Intent(Add_Message_Activity.this, MainActivity.class);
+                    startActivity(i);
 
                 }
                 else {
@@ -249,8 +250,7 @@ public class Add_Message_Activity extends AppCompatActivity {
 
             // Perform your query - the contactUri
             // is like a "where" clause here
-            Cursor cursor = this.getContentResolver()
-                    .query(contactUri, queryFields, null, null, null);
+            Cursor cursor = this.getContentResolver().query(contactUri, queryFields, null, null, null);
 
 
 
