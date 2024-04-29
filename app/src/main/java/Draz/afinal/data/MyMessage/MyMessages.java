@@ -11,6 +11,7 @@ public class MyMessages {
     @PrimaryKey(autoGenerate = true)
     public long keyid;// رقم المهمة
     public String title;//عنوان الرسالة
+    public int importance;//درجة الاهمية 1-5
     public String Text;//نص الرسالة
     public String contact_name;// اسماء جهات الاتصال
     public String  contact_phone;//رقم الهاتف
@@ -25,6 +26,14 @@ public class MyMessages {
     public long MesjId;//رقم موضوع الرسالة
     public long getKeyid() {
         return keyid;
+    }
+
+    public int getImportance() {
+        return importance;
+    }
+
+    public void setImportance(int importance) {
+        this.importance = importance;
     }
 
     public void setKeyid(long keyid) {

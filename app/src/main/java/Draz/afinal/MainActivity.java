@@ -8,11 +8,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -20,32 +19,28 @@ import android.widget.Toast;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.TimePicker;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Calendar;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 //import Draz.afinal.data.AppDatabase;
+import java.util.ArrayList;
+
+import Draz.afinal.data.MyMessage.MyMessageAdabter;
 import Draz.afinal.data.MyMessage.MyMessages;
-import Draz.afinal.data.MyMessage.MyMessagesQuery;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabAdd;
     private SearchView srchV;
     private Spinner spnrSubject;
-    private ListView lstvTasks;
+    private ListView lstvMsg;
+    private MyMessageAdabter messageAdabter;
     TimePicker alarmTimePicker;
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
@@ -55,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fabAdd = findViewById(R.id.fabAdd);
-        srchV = findViewById(R.id.srchV);
+        srchV = findViewById(R.id.srchV);//הפניה לרכיב הגרפי שמציג אוסף
+        messageAdabter = new MyMessageAdabter(this,R.layout.mymessage_item_layout);//בניית המתאם
+        lstvMsg.setAdapter(messageAdabter);//קישור המתאם אם המציג הגרפי לאוסף
         spnrSubject = findViewById(R.id.spnrSubject);
-        lstvTasks = findViewById(R.id.lstvTasks);
+        lstvMsg = findViewById(R.id.lstvMsg);
       //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-
         fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +68,53 @@ public class MainActivity extends AppCompatActivity {
         });
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);
-        lstvTasks = findViewById(R.id.lstvTasks);
+        lstvMsg = findViewById(R.id.lstvMsg);
         Log.d("draz", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
+    /**
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     */
+    public ArrayList<MyMessages> readMessageFrom_FB()
+    {
+        //בניית רשימה ריקה
+        ArrayList<MyMessages> arrayList =new ArrayList<>();
+        //קבלת הפנייה למסד הנתונים
+        FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
+        //קישור לקבוצה לקבוצה שרוצים לקרוא
+        ffRef.collection("MyUsers").
+                document(FirebaseAuth.getInstance().getUid()).
+                collection("subjects").
+                document(spnrSubject.getSelectedItem().toString()).
+                //הוספת מאזין לקריאת הנתונים
+                        collection("Tasks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Message<QuerySnapshot> message) {
+
+                    }
+
+                    /**
+                     * תגובה לאירוע השלמת קריאת הנתונים
+                     * @param Message הנתונים שהתקבלו מענן מסד הנתונים
+                     */
+                    @Override
+                    public void onComplete(@NonNull Message<QuerySnapshot> Message) {
+                        if(Message.isSuccessful())// אם בקשת הנתונים התקבלה בהצלחה
+                            //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
+                            for (DocumentSnapshot document : Message.getResult().getDocuments())
+                            {
+                                //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
+                                arrayList.add(document.toObject(MyMessages.class));
+                            }
+                        else{
+                            Toast.makeText(MainActivity.this, "Error Reading data"+Message.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        return arrayList;
+    }
+
 
 
     @Override

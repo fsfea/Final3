@@ -1,13 +1,19 @@
 package Draz.afinal.data.MyMessage;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.annotations.Nullable;
+
+import Draz.afinal.R;
 
 
 public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
@@ -36,6 +42,31 @@ public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //בניית הפריט הגרפי מתו קובץ העיצוב
+        View vitem= convertView;
+        if(vitem==null)
+            vitem= LayoutInflater.from(getContext()).inflate(itemLayout,parent,false);
+        //קבלת הפניות לרכיבים בקובץ העיצוב
+        ImageView imageView=vitem.findViewById(R.id.imgVitm);
+        TextView tvTitle=vitem.findViewById(R.id.tvitm_Title);
+        TextView tvText=vitem.findViewById(R.id.tvitm_Text);
+        TextView tvImportance=vitem.findViewById(R.id.tvitmimportance);
+        ImageButton btnSendSMS=vitem.findViewById(R.id.imgBtnSendSmsitm);
+        ImageButton btnEdit=vitem.findViewById(R.id.imgBtnEdititm);
+        ImageButton btnCall=vitem.findViewById(R.id.imgBtnCallitm);
+        ImageButton btnDel=vitem.findViewById(R.id.imgBtnDeleteitm);
+        //קבלת הנתון (עצם) הנוכחי
+        MyMessages current=getItem(position);
+        //הצגת הנתונים על שדות הרכיב הגרפי
+        tvTitle.setText(current.getTitle());
+        tvText.setText(current.getText());
+        tvImportance.setText("Importance:"+current.getImportance());
+
+        return vitem;
+
+
+
+
         return super.getView(position, convertView, parent);
     }
 }
