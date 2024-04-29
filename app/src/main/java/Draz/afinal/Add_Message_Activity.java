@@ -243,10 +243,10 @@ public class Add_Message_Activity extends AppCompatActivity {
         if (requestCode == REQUEST_CONTACT && data != null)
         {
             Uri contactUri = data.getData();
-
+//,ContactsContract.CommonDataKinds.Phone.NUMBER
             // Specify which fields you want your
             // query to return values for
-            String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME,ContactsContract.CommonDataKinds.Phone.NUMBER};
+            String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME};
 
             // Perform your query - the contactUri
             // is like a "where" clause here
@@ -266,10 +266,14 @@ public class Add_Message_Activity extends AppCompatActivity {
                 cursor.moveToFirst();
                 String name = cursor.getString(0);
                 etContact_name.setText(name);
-                cursor.moveToFirst();
-                String num = cursor.getString(1);
-                et_Contactphone.setText(num);
-
+//
+//                Cursor c = getContentResolver().query(contactUri, null, null, null, null);
+//                if (cursor.getCount() == 0) return;
+//                if (c.moveToFirst()) {
+//                    int phoneIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+//                    String num = c.getString(phoneIndex);
+//                    et_Contactphone.setText(num);
+//                }
             }
             finally
             {
