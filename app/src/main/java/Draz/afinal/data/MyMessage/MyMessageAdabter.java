@@ -67,7 +67,7 @@ public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
 
 
 
-        return super.getView(position, convertView, parent);
+
     }
 }
 

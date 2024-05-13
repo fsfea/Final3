@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     TimePicker alarmTimePicker;
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         fabAdd = findViewById(R.id.fabAdd);
         srchV = findViewById(R.id.srchV);//הפניה לרכיב הגרפי שמציג אוסף
         messageAdabter = new MyMessageAdabter(this,R.layout.mymessage_item_layout);//בניית המתאם
+        lstvMsg = findViewById(R.id.lstvMsg);
         lstvMsg.setAdapter(messageAdabter);//קישור המתאם אם המציג הגרפי לאוסף
         spnrSubject = findViewById(R.id.spnrSubject);
-        lstvMsg = findViewById(R.id.lstvMsg);
+
       //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         fabAdd = findViewById(R.id.fabAdd);
@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
      *  קריאת נתונים ממסד הנתונים firestore
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
      */
+    /**
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     */
     public ArrayList<MyMessages> readMessageFrom_FB()
     {
         //בניית רשימה ריקה
@@ -88,18 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 collection("subjects").
                 document(spnrSubject.getSelectedItem().toString()).
                 //הוספת מאזין לקריאת הנתונים
-                        collection("Tasks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Message<QuerySnapshot> message) {
-
-                    }
-
+                        collection("Messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     /**
                      * תגובה לאירוע השלמת קריאת הנתונים
                      * @param Message הנתונים שהתקבלו מענן מסד הנתונים
                      */
                     @Override
-                    public void onComplete(@NonNull Message<QuerySnapshot> Message) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> Message) {
                         if(Message.isSuccessful())// אם בקשת הנתונים התקבלה בהצלחה
                             //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
                             for (DocumentSnapshot document : Message.getResult().getDocuments())
