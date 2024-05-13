@@ -23,17 +23,30 @@ public class MyMessages {
     public double h;//الساعات
     public double m;//الدقائق
     public boolean isCompleted;//هل تمت الرسالة
-    public long MesjId;//رقم موضوع الرسالة
+    public String mesjId;//رقم  الرسالة
     public long getKeyid() {
         return keyid;
     }
 
-    public int getImportance() {
-        return importance;
-    }
-
-    public void setImportance(int importance) {
-        this.importance = importance;
+    @Override
+    public String toString() {
+        return "MyMessages{" +
+                "keyid=" + keyid +
+                ", title='" + title + '\'' +
+                ", importance=" + importance +
+                ", Text='" + Text + '\'' +
+                ", contact_name='" + contact_name + '\'' +
+                ", contact_phone='" + contact_phone + '\'' +
+                ", date=" + date +
+                ", y=" + y +
+                ", month=" + month +
+                ", d=" + d +
+                ", time=" + time +
+                ", h=" + h +
+                ", m=" + m +
+                ", isCompleted=" + isCompleted +
+                ", mesjId='" + mesjId + '\'' +
+                '}';
     }
 
     public void setKeyid(long keyid) {
@@ -46,6 +59,14 @@ public class MyMessages {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getImportance() {
+        return importance;
+    }
+
+    public void setImportance(int importance) {
+        this.importance = importance;
     }
 
     public String getText() {
@@ -72,6 +93,14 @@ public class MyMessages {
         this.contact_phone = contact_phone;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public int getY() {
         return y;
     }
@@ -96,6 +125,14 @@ public class MyMessages {
         this.d = d;
     }
 
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
     public double getH() {
         return h;
     }
@@ -112,14 +149,6 @@ public class MyMessages {
         this.m = m;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public boolean isCompleted() {
         return isCompleted;
     }
@@ -128,36 +157,11 @@ public class MyMessages {
         isCompleted = completed;
     }
 
-    public long getMesjId() {
-        return MesjId;
+    public String getMesjId() {
+        return mesjId;
     }
 
-    public void setMesjId(long mesjId) {
-        MesjId = mesjId;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    @Override
-    public String toString() {
-        return "MyMessages{" +
-                "keyid=" + keyid +
-                ", title='" + title + '\'' +
-                ", Text='" + Text + '\'' +
-                ", contact_name='" + contact_name + '\'' +
-                ", contact_phone=" + contact_phone +
-                ", y=" + y +
-                ", month=" + month +
-                ", d=" + d +
-                ", h=" + h +
-                ", m=" + m +
-                ", isCompleted=" + isCompleted +
-                '}';
+    public void setMesjId(String mesjId) {
+        this.mesjId = mesjId;
     }
 }

@@ -2,16 +2,20 @@ package Draz.afinal;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.icu.text.CaseMap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,14 +45,15 @@ public class Add_Message_Activity extends AppCompatActivity {
     private Button BTNCancel,btnpickcontact;
     private SeekBar skbrImportance;
     private TextInputEditText etTitle;
-    private TextInputEditText etShortTitle;
     private TextInputEditText etText;
     private TextInputEditText etContact_name ;
     private TextInputEditText et_Contactphone ;
     private EditText etDate ;
     private EditText etTime ;
+    private Button datePickerButton;
+    private TextView selectedDateTextView;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
-
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,9 @@ public class Add_Message_Activity extends AppCompatActivity {
         et_Contactphone= findViewById(R.id.etContact_phone);
         etDate = findViewById(R.id.etDate);
          etTime =findViewById(R.id.etTime);
+        datePickerButton = findViewById(R.id.datePickerButton);
+        selectedDateTextView = findViewById(R.id.selectedDateTextView);
+        calendar = Calendar.getInstance();
 
 // Intent to pick contacts
 
@@ -80,8 +88,46 @@ public class Add_Message_Activity extends AppCompatActivity {
                 }
             }
         });
+        datePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
 
     }
+    private void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Update the Calendar instance with the selected date
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        // Display the selected date in the TextView
+                        updateDateTextView();
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+
+        // Set the minimum date to today's date
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
+    }
+
+    private void updateDateTextView() {
+        // Format the selected date and display it in the TextView
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String selectedDate = sdf.format(calendar.getTime());
+        selectedDateTextView.setText("Selected Date: " + selectedDate);
+    }
+
 
     private boolean hasContactsPermission()
     {
@@ -120,10 +166,10 @@ public class Add_Message_Activity extends AppCompatActivity {
         int importancee=skbrImportance.getProgress();
 
 
-      //  if (shortTitle.length()<1)
+        if (title.length()<1)
         {
             isAllOk=false;
-            etShortTitle.setError("short title is empty");
+            etTitle.setError("short title is empty");
         }
 
         if (text.length()<1)
@@ -193,11 +239,11 @@ public class Add_Message_Activity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        ;
+        String id = db.collection("MyUsers").document(uid).collection("messages").document().getId();
+        messages.setMesjId(id);
         //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص   نجاح المطلوب
         // معالج حدث لفحص هل تم المطلوب من قاعدة البيانات
-        db.collection("MyUsers").document(uid).set(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection("MyUsers").document(uid).collection("messages").document(id).set(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
             //داله معالجه الحدث
             @Override
             public void onComplete(@NonNull Task<Void> task) {

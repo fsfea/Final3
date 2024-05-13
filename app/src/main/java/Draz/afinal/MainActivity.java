@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.app.AlarmManager;
@@ -30,7 +34,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 //import Draz.afinal.data.AppDatabase;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import Draz.afinal.data.MyMessage.MyMessageAdabter;
 import Draz.afinal.data.MyMessage.MyMessages;
@@ -41,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spnrSubject;
     private ListView lstvMsg;
     private MyMessageAdabter messageAdabter;
+
+
+
     TimePicker alarmTimePicker;
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
@@ -54,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         lstvMsg = findViewById(R.id.lstvMsg);
         lstvMsg.setAdapter(messageAdabter);//קישור המתאם אם המציג הגרפי לאוסף
         spnrSubject = findViewById(R.id.spnrSubject);
-
       //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         fabAdd = findViewById(R.id.fabAdd);
@@ -66,12 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);
         lstvMsg = findViewById(R.id.lstvMsg);
         Log.d("draz", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
+
     /**
      *  קריאת נתונים ממסד הנתונים firestore
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
@@ -112,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         return arrayList;
+
     }
 
 
@@ -197,24 +209,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        readMessageFrom_FB();
 
-       // initAllListView();
     }
 
-//    private void initAllListView() {
-//        AppDatabase db = AppDatabase.getDB((getApplicationContext()));
-//        MyMessagesQuery messagesQuery = db.getMyMessage();
-//        List<MyMessages> allMesseages= messagesQuery.get();
-//        ArrayAdapter<MyMessages> tsksAdapter = new ArrayAdapter<MyMessages>(this, android.R.layout.simple_dropdown_item_1line);
-//        tsksAdapter.addAll(allMesseages);
-//        lstvTasks.setAdapter((tsksAdapter));
-//        lstvTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int i, long I) {
-//                ShowPopUpMenu(view, tsksAdapter.getItem(i));
-//            }
-//        });
-   // }
 
     @Override
     protected void onPause() {
