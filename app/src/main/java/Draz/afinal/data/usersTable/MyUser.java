@@ -21,6 +21,7 @@ public class MyUser {
     public String phone;// رقم الهاتف
     public String passw;// الرقم السري
     public String key ;
+    public String image;
 
     public long getKeyid() {
         return keyid;
@@ -70,6 +71,14 @@ public class MyUser {
         this.key = key;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "MyUser{" +
@@ -79,6 +88,7 @@ public class MyUser {
                 ", phone='" + phone + '\'' +
                 ", passw='" + passw + '\'' +
                 ", key='" + key + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

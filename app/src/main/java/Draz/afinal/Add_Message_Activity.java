@@ -244,6 +244,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         //بناء الكائن الذي سيتم حفظه
        MyMessages messages=new MyMessages();
        messages.setText(text);
+       messages.setUid(uid);
         messages.setContact_name(contact_name);
         messages.setContact_phone(contact_phone);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);

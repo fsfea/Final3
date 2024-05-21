@@ -12,10 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import Draz.afinal.R;
@@ -66,12 +73,6 @@ public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
         tvTitle.setText(current.getTitle());
         tvText.setText(current.getText());
         tvImportance.setText("Importance:"+current.getImportance());
-        btnSendSMS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSendSmsApp(current.getText(),"");// אם יש טלפון המשימה מעבירים במקום ה ״״
-            }
-        });
 
 
 
@@ -82,22 +83,27 @@ public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
     }
 
     /**
-     *  פתיחת אפליקצית שליחת sms
-     * @param msg .. ההודעה שרוצים לשלוח
-     * @param phone
+     * מחיקת פריט כולל התמונה מבסיס הנתונים
+     * @param myMessages הפריט שמוחקים
      */
-    public void openSendSmsApp(String msg, String phone)
+    private void delMyMessagesFromDB_FB(MyMessages myMessages)
     {
-        //אינטנט מרומז לפתיחת אפליקצית ההודות סמס
-        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-        //מעבירים מספר הטלפון
-        smsIntent.setData(Uri.parse("smsto:"+phone));
-        //ההודעה שנרצה שתופיע באפליקצית ה סמס
-        smsIntent.putExtra("sms_body",msg);
-        smsIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        //פתיחת אפליקציית ה סמס
-        getContext().startActivity(smsIntent);
+        //הפנייה/כתובת  הפריט שרוצים למחוק
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        db.collection("MyUsers").
+                document(myMessages.getUid()).
+                collection("Messages").document(myMessages.mesjId).
+                delete().//מאזין אם המחיקה בוצעה
+                addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    remove(myMessages);// מוחקים מהמתאם
+                    Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 

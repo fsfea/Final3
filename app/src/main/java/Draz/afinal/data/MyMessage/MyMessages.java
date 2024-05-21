@@ -24,6 +24,8 @@ public class MyMessages {
     public double m;//الدقائق
     public boolean isCompleted;//هل تمت الرسالة
     public String mesjId;//رقم  الرسالة
+    private String uid;
+
     public long getKeyid() {
         return keyid;
     }
@@ -163,5 +165,13 @@ public class MyMessages {
 
     public void setMesjId(String mesjId) {
         this.mesjId = mesjId;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }
