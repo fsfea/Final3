@@ -1,13 +1,18 @@
 package Draz.afinal;
 
+import static android.Manifest.permission.SEND_SMS;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -48,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spnrSubject;
     private ListView lstvMsg;
     private MyMessageAdabter messageAdabter;
-
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
 
     TimePicker alarmTimePicker;
@@ -75,7 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        // Check for SMS permission
+        if (ContextCompat.checkSelfPermission(this,SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this, new String[]{SEND_SMS}, PERMISSION_REQUEST_CODE);
+        }
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);
         lstvMsg = findViewById(R.id.lstvMsg);
@@ -236,14 +245,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d("EZ", "ondestroy");
         Toast.makeText(this, "ondestroy", Toast.LENGTH_SHORT).show();
     }
-//    private void initListBySubjId(long key_id)
-//    {
-//        AppDatabase db =AppDatabase.getDB((getApplicationContext()));
-//        MyMessagesQuery messagesQuery=db.getMyMessage();
-//        List<MyMessages>allMessages=messagesQuery.get(key_id);
-//        ArrayAdapter<MyMessages>messagesAdapter = new ArrayAdapter<MyMessages>(this, android.R.layout.simple_dropdown_item_1line);
-//        messagesAdapter.addAll(allMessages);
-//        lstvTasks.setAdapter((messagesAdapter));
-//
-//    }
+    // Handle permission request result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+            } else {
+                // Permission denied
+                Toast.makeText(getApplicationContext(), "Permission denied. Can't send SMS.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

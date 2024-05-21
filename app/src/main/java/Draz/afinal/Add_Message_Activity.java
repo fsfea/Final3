@@ -3,6 +3,7 @@ package Draz.afinal;
 import static android.Manifest.permission.READ_CONTACTS;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,12 +11,14 @@ import android.icu.text.CaseMap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,7 +51,8 @@ public class Add_Message_Activity extends AppCompatActivity {
     private TextInputEditText etText;
     private TextInputEditText etContact_name ;
     private TextInputEditText et_Contactphone ;
-
+    private Button timePickerButton;
+    private TextView selectedTimeTextView;
     private Button datePickerButton;
     private TextView selectedDateTextView;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
@@ -65,11 +69,19 @@ public class Add_Message_Activity extends AppCompatActivity {
         etContact_name = findViewById(R.id.etContact_name);
         etText = findViewById(R.id.etText);
         et_Contactphone= findViewById(R.id.etContact_phone);
-
+        timePickerButton = findViewById(R.id.timePickerButton);
+        selectedTimeTextView = findViewById(R.id.selectedTimeTextView);
         datePickerButton = findViewById(R.id.datePickerButton);
         selectedDateTextView = findViewById(R.id.selectedDateTextView);
         calendar = Calendar.getInstance();
 
+
+        timePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog();
+            }
+        });
 // Intent to pick contacts
 
         btnpickcontact= findViewById(R.id.btnpickcontact);
@@ -118,7 +130,31 @@ public class Add_Message_Activity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
+    private void showTimePickerDialog() {
+        // Get current time
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
+        // Create a new TimePickerDialog instance
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Display selected time in TextView
+                        String selectedTime = hourOfDay + ":" + minute;
+                        selectedTimeTextView.setText(selectedTime);
+                    }
+                },
+                hour,
+                minute,
+                true // Set true if you want to enable 24-hour mode, false otherwise
+        );
+
+        // Show the time picker dialog
+        timePickerDialog.show();
+    }
     private void updateDateTextView() {
         // Format the selected date and display it in the TextView
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -315,5 +351,18 @@ public class Add_Message_Activity extends AppCompatActivity {
             }
         }
     }
+    private void sendSMS(String phoneNumber,String message) {
+
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent successfully.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Failed to send SMS.", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
 }
 
