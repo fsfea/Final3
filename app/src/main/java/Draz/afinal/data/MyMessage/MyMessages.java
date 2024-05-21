@@ -12,7 +12,7 @@ public class MyMessages {
     public long keyid;// رقم المهمة
     public String title;//عنوان الرسالة
     public int importance;//درجة الاهمية 1-5
-    public String Text;//نص الرسالة
+    public String text;//نص الرسالة
     public String contact_name;// اسماء جهات الاتصال
     public String  contact_phone;//رقم الهاتف
     public Date date;
@@ -34,7 +34,7 @@ public class MyMessages {
                 "keyid=" + keyid +
                 ", title='" + title + '\'' +
                 ", importance=" + importance +
-                ", Text='" + Text + '\'' +
+                ", Text='" + text + '\'' +
                 ", contact_name='" + contact_name + '\'' +
                 ", contact_phone='" + contact_phone + '\'' +
                 ", date=" + date +
@@ -70,11 +70,11 @@ public class MyMessages {
     }
 
     public String getText() {
-        return Text;
+        return text;
     }
 
     public void setText(String text) {
-        Text = text;
+        text = text;
     }
 
     public String getContact_name() {

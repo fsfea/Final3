@@ -91,40 +91,42 @@ public class MainActivity extends AppCompatActivity {
      *  קריאת נתונים ממסד הנתונים firestore
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
      */
-    public ArrayList<MyMessages> readMessageFrom_FB()
+    /**
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     */
+    public void readMessagesFrom_FB()
     {
+        //استخراج الرقم المميز للمستعمل الذي سجل الدخول لاستعماله كاسم لل دوكيومينت
+        String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
         //בניית רשימה ריקה
         ArrayList<MyMessages> arrayList =new ArrayList<>();
         //קבלת הפנייה למסד הנתונים
         FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
-        //קישור לקבוצה לקבוצה שרוצים לקרוא
-        ffRef.collection("MyUsers").
-                document(FirebaseAuth.getInstance().getUid()).
-                collection("subjects").
-                document(spnrSubject.getSelectedItem().toString()).
-                //הוספת מאזין לקריאת הנתונים
-                        collection("Messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        //קישור לקבוצה collection שרוצים לקרוא
+        ffRef.collection("MyUsers").document(uid).collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     /**
                      * תגובה לאירוע השלמת קריאת הנתונים
-                     * @param Message הנתונים שהתקבלו מענן מסד הנתונים
+                     * @param task הנתונים שהתקבלו מענן מסד הנתונים
                      */
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> Message) {
-                        if(Message.isSuccessful())// אם בקשת הנתונים התקבלה בהצלחה
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
                             //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
-                            for (DocumentSnapshot document : Message.getResult().getDocuments())
-                            {
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                 //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
                                 arrayList.add(document.toObject(MyMessages.class));
                             }
+                            messageAdabter.clear();//ניקוי המתאם מכל הנתונים
+                            messageAdabter.addAll(arrayList);//הוספת כל הנתונים למתאם
+                        }
                         else{
-                            Toast.makeText(MainActivity.this, "Error Reading data"+Message.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Error Reading data"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        return arrayList;
-
     }
+
 
 
 
@@ -209,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-        readMessageFrom_FB();
+        readMessagesFrom_FB();
 
     }
 

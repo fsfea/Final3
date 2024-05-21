@@ -48,8 +48,7 @@ public class Add_Message_Activity extends AppCompatActivity {
     private TextInputEditText etText;
     private TextInputEditText etContact_name ;
     private TextInputEditText et_Contactphone ;
-    private EditText etDate ;
-    private EditText etTime ;
+
     private Button datePickerButton;
     private TextView selectedDateTextView;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
@@ -66,8 +65,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         etContact_name = findViewById(R.id.etContact_name);
         etText = findViewById(R.id.etText);
         et_Contactphone= findViewById(R.id.etContact_phone);
-        etDate = findViewById(R.id.etDate);
-         etTime =findViewById(R.id.etTime);
+
         datePickerButton = findViewById(R.id.datePickerButton);
         selectedDateTextView = findViewById(R.id.selectedDateTextView);
         calendar = Calendar.getInstance();
@@ -158,8 +156,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         String text=etText.getText().toString();
         String contact_name=etContact_name.getText().toString();
         String contact_phone=et_Contactphone.getText().toString();
-        String date = etDate.getText().toString();
-        String time =etTime.getText().toString();
+
         String title = etTitle.getText().toString();
 
 
@@ -188,16 +185,7 @@ public class Add_Message_Activity extends AppCompatActivity {
           isAllOk=false;
           et_Contactphone.setError("contact_phone is empty");
       }
-      if (date.length()<1)
-      {
-          isAllOk=false;
-          etDate.setError("date is empty");
-      }
-      if (time.length()<1)
-        {
-            isAllOk=false;
-            etTime.setError("time is empty");
-        }
+
         if(title.length()<1)
         {
             isAllOk=false;
@@ -205,7 +193,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         }
         if(isAllOk)
         {
-                savemessage(text,contact_name,contact_phone,date,time,title);
+                savemessage(text,contact_name,contact_phone,"date","time",title);
 
         }
 
