@@ -15,40 +15,13 @@ public class MyMessages {
     public String text;//نص الرسالة
     public String contact_name;// اسماء جهات الاتصال
     public String  contact_phone;//رقم الهاتف
-    public Date date;
-    public int y;//السنة
-    public int month;//الشهر
-    public int d;//اليوم
-    public Time time;
-    public double h;//الساعات
-    public double m;//الدقائق
+    public long time ;
     public boolean isCompleted;//هل تمت الرسالة
     public String mesjId;//رقم  الرسالة
     private String uid;
 
     public long getKeyid() {
         return keyid;
-    }
-
-    @Override
-    public String toString() {
-        return "MyMessages{" +
-                "keyid=" + keyid +
-                ", title='" + title + '\'' +
-                ", importance=" + importance +
-                ", Text='" + text + '\'' +
-                ", contact_name='" + contact_name + '\'' +
-                ", contact_phone='" + contact_phone + '\'' +
-                ", date=" + date +
-                ", y=" + y +
-                ", month=" + month +
-                ", d=" + d +
-                ", time=" + time +
-                ", h=" + h +
-                ", m=" + m +
-                ", isCompleted=" + isCompleted +
-                ", mesjId='" + mesjId + '\'' +
-                '}';
     }
 
     public void setKeyid(long keyid) {
@@ -76,7 +49,7 @@ public class MyMessages {
     }
 
     public void setText(String text) {
-        text = text;
+        this.text = text;
     }
 
     public String getContact_name() {
@@ -95,60 +68,12 @@ public class MyMessages {
         this.contact_phone = contact_phone;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getD() {
-        return d;
-    }
-
-    public void setD(int d) {
-        this.d = d;
-    }
-
-    public Time getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(long time) {
         this.time = time;
-    }
-
-    public double getH() {
-        return h;
-    }
-
-    public void setH(double h) {
-        this.h = h;
-    }
-
-    public double getM() {
-        return m;
-    }
-
-    public void setM(double m) {
-        this.m = m;
     }
 
     public boolean isCompleted() {
@@ -167,11 +92,27 @@ public class MyMessages {
         this.mesjId = mesjId;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public void setUid(String uid) {
         this.uid = uid;
     }
 
-    public String getUid() {
-        return uid;
+    @Override
+    public String toString() {
+        return "MyMessages{" +
+                "keyid=" + keyid +
+                ", title='" + title + '\'' +
+                ", importance=" + importance +
+                ", text='" + text + '\'' +
+                ", contact_name='" + contact_name + '\'' +
+                ", contact_phone='" + contact_phone + '\'' +
+                ", time=" + time +
+                ", isCompleted=" + isCompleted +
+                ", mesjId='" + mesjId + '\'' +
+                ", uid='" + uid + '\'' +
+                '}';
     }
 }

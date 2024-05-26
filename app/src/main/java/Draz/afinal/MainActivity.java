@@ -1,5 +1,6 @@
 package Draz.afinal;
 
+import static android.Manifest.permission.SCHEDULE_EXACT_ALARM;
 import static android.Manifest.permission.SEND_SMS;
 
 import androidx.annotation.NonNull;
@@ -81,9 +82,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Check for SMS permission
-        if (ContextCompat.checkSelfPermission(this,SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this,SEND_SMS) != PackageManager.PERMISSION_GRANTED ) {
             // Permission is not granted
             ActivityCompat.requestPermissions(this, new String[]{SEND_SMS}, PERMISSION_REQUEST_CODE);
+        }
+        if (ContextCompat.checkSelfPermission(this,SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED ) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this, new String[]{SCHEDULE_EXACT_ALARM}, PERMISSION_REQUEST_CODE);
         }
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);

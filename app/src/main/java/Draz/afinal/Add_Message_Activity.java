@@ -118,7 +118,10 @@ public class Add_Message_Activity extends AppCompatActivity {
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                         // Display the selected date in the TextView
-                        updateDateTextView();
+                        // Format the selected date and display it in the TextView
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        String selectedDate = sdf.format(calendar.getTime());
+                        selectedDateTextView.setText(selectedDate);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -144,6 +147,8 @@ public class Add_Message_Activity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         // Display selected time in TextView
                         String selectedTime = hourOfDay + ":" + minute;
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
                         selectedTimeTextView.setText(selectedTime);
                     }
                 },
@@ -155,12 +160,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         // Show the time picker dialog
         timePickerDialog.show();
     }
-    private void updateDateTextView() {
-        // Format the selected date and display it in the TextView
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String selectedDate = sdf.format(calendar.getTime());
-        selectedDateTextView.setText("Selected Date: " + selectedDate);
-    }
+
 
 
     private boolean hasContactsPermission()
@@ -227,16 +227,21 @@ public class Add_Message_Activity extends AppCompatActivity {
             isAllOk=false;
             etTitle.setError("title is empty");
         }
+        if (calendar.getTimeInMillis()<=Calendar.getInstance().getTimeInMillis())
+        {
+            isAllOk = false;
+            Toast.makeText(this, "must be future time", Toast.LENGTH_SHORT).show();
+        }
         if(isAllOk)
         {
-                savemessage(text,contact_name,contact_phone,"date","time",title);
+                savemessage(text,contact_name,contact_phone,calendar.getTimeInMillis(),title);
 
         }
 
 
     }
 
-    private void savemessage(String text, String contact_name, String contact_phone, String date, String time, String title) {
+    private void savemessage(String text, String contact_name, String contact_phone, long time, String title) {
         //مؤشر لقاعدة البيانات
         FirebaseFirestore db= FirebaseFirestore.getInstance();
         //استخراج الرقم المميز للمستعمل الذي سجل الدخول لاستعماله كاسم لل دوكيومينت
@@ -247,23 +252,11 @@ public class Add_Message_Activity extends AppCompatActivity {
        messages.setUid(uid);
         messages.setContact_name(contact_name);
         messages.setContact_phone(contact_phone);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        messages.setTime(time);
 
 
-        Date d=null ,t= null;
-        try {
-            d = formatter.parse(date);
-            messages.setDate(d);
-             t = dateFormat.parse(time);
-            Calendar calendar=Calendar.getInstance();
-            calendar.set(d.getYear(),d.getMonth(),d.getDate(),t.getHours(),t.getMinutes());
-            //todo alarm maneger
 
-            messages.setTitle(title);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         String id = db.collection("MyUsers").document(uid).collection("messages").document().getId();
         messages.setMesjId(id);
         //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص   نجاح المطلوب
@@ -275,9 +268,9 @@ public class Add_Message_Activity extends AppCompatActivity {
                 // هل تم تنفيذ المطلوب بنجاح
                 if (task.isSuccessful()) {
                     Toast.makeText(Add_Message_Activity.this, "Succeeded to Add profile", Toast.LENGTH_SHORT).show();
-                    //SaveUser_FB(email ,name,phone,password);
-                    Intent i = new Intent(Add_Message_Activity.this, MainActivity.class);
-                    startActivity(i);
+                    //todo send message and phone
+                   AlarmHelper.setAlarm(Add_Message_Activity.this,time);
+                 finish();
 
                 }
                 else {
@@ -317,6 +310,8 @@ public class Add_Message_Activity extends AppCompatActivity {
 //,ContactsContract.CommonDataKinds.Phone.NUMBER
             // Specify which fields you want your
             // query to return values for
+            String contactNumber = null;
+            String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
             String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME};
 
             // Perform your query - the contactUri

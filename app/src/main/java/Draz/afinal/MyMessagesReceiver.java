@@ -13,6 +13,7 @@ public class MyMessagesReceiver extends BroadcastReceiver {
         Intent serviceIntent = new Intent(context, MyMessageService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(serviceIntent);
+
         } else {
             context.startService(serviceIntent);
         }
