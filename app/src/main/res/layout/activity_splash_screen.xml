@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/msg"
     tools:context=".Splash_Screen">
 
-    <TextView
-        android:id="@+id/et"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:gravity="center"
-        android:text="welcom to my empiere"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="21dp" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/message" />
 </RelativeLayout>
