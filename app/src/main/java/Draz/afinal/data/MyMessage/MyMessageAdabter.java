@@ -70,7 +70,7 @@ MyMessages messages=new MyMessages();
         TextView tvText = vitem.findViewById(R.id.tvitm_Text);
         TextView tvImportance = vitem.findViewById(R.id.tvitmimportance);
         ImageButton btnSendSMS = vitem.findViewById(R.id.imgBtnSendSmsitm);
-        ImageButton btnwhtapp = vitem.findViewById(R.id.btnWhats);
+        ImageView btnwhtapp = vitem.findViewById(R.id.btnWhats);
         ImageButton btnCall = vitem.findViewById(R.id.imgBtnCallitm);
         ImageButton btnDel = vitem.findViewById(R.id.imgBtnDeleteitm);
         //קבלת הנתון (עצם) הנוכחי
@@ -122,9 +122,8 @@ MyMessages messages=new MyMessages();
     {
         //הפנייה/כתובת  הפריט שרוצים למחוק
         FirebaseFirestore db=FirebaseFirestore.getInstance();
-        db.collection("MyUsers").
-                document(myMessages.getUid()).
-                collection("Messages").document(myMessages.mesjId).
+        db.collection("MyUsers").document(myMessages.getUid()).
+                collection("messages").document(myMessages.getUid()).
                 delete().//מאזין אם המחיקה בוצעה
                 addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

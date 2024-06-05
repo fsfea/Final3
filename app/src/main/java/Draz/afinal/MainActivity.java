@@ -10,21 +10,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import android.app.AlarmManager;
@@ -40,10 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 //import Draz.afinal.data.AppDatabase;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 import Draz.afinal.data.MyMessage.MyMessageAdabter;
 import Draz.afinal.data.MyMessage.MyMessages;
@@ -152,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.edit_message) {
+            Toast.makeText(this, "Edit_message", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, Edit_Message_Activity.class);
+            startActivity(i);
+        }
         if (item.getItemId() == R.id.itmSettings) {
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         }
@@ -193,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.itmAddTask) {
+                if (item.getItemId() == R.id.edit_message) {
                     Toast.makeText(MainActivity.this, "Add", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(MainActivity.this, Add_Message_Activity.class);
                     startActivity(i);

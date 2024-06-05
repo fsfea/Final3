@@ -93,47 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edContactName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="Contact_Name"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edContactPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="Contact_phone"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/edDate2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:hint="dd/mm/yy"
-            android:inputType="date"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/etTime2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:ems="10"
-            android:hint="00:00"
-            android:inputType="time"
-            android:minHeight="48dp" />
-
     </LinearLayout>
 
 </RelativeLayout>
