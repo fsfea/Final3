@@ -19,7 +19,7 @@ public class MyMessages {
     public boolean isCompleted;//هل تمت الرسالة
     public String mesjId;//رقم  الرسالة
     private String uid;
-
+    public String phone;
     public long getKeyid() {
         return keyid;
     }
@@ -100,6 +100,14 @@ public class MyMessages {
         this.uid = uid;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "MyMessages{" +
@@ -113,6 +121,7 @@ public class MyMessages {
                 ", isCompleted=" + isCompleted +
                 ", mesjId='" + mesjId + '\'' +
                 ", uid='" + uid + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

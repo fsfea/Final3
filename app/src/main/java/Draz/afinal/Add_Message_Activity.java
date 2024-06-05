@@ -35,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -135,7 +136,6 @@ public class Add_Message_Activity extends AppCompatActivity {
     }
     private void showTimePickerDialog() {
         // Get current time
-        Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -227,8 +227,15 @@ public class Add_Message_Activity extends AppCompatActivity {
             isAllOk=false;
             etTitle.setError("title is empty");
         }
-        if (calendar.getTimeInMillis()<=Calendar.getInstance().getTimeInMillis())
+
+        SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
+        String my = format.format(calendar.getTime()).toString();
+        Calendar currentCalnder = Calendar.getInstance();
+        String cur=format.format(currentCalnder.getTime());
+
+        if (calendar.getTimeInMillis()<= currentCalnder.getTimeInMillis())
         {
+
             isAllOk = false;
             Toast.makeText(this, "must be future time", Toast.LENGTH_SHORT).show();
         }
