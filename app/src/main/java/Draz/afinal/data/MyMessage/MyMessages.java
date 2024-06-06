@@ -3,11 +3,12 @@ package Draz.afinal.data.MyMessage;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
-public class MyMessages {
+public class MyMessages implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long keyid;// رقم المهمة
     public String title;//عنوان الرسالة

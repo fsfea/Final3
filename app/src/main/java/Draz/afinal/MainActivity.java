@@ -221,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
         readMessagesFrom_FB();
 
     }
@@ -231,21 +230,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("EZ", "onpause");
-        Toast.makeText(this, "onpause", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d("EZ", "onstop");
-        Toast.makeText(this, "onstop", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d("EZ", "ondestroy");
-        Toast.makeText(this, "ondestroy", Toast.LENGTH_SHORT).show();
     }
     // Handle permission request result
     @Override

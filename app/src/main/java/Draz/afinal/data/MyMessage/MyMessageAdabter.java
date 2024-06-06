@@ -123,7 +123,7 @@ MyMessages messages=new MyMessages();
         //הפנייה/כתובת  הפריט שרוצים למחוק
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         db.collection("MyUsers").document(myMessages.getUid()).
-                collection("messages").document(myMessages.getUid()).
+
                 delete().//מאזין אם המחיקה בוצעה
                 addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

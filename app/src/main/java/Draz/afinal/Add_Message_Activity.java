@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.icu.text.CaseMap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -15,7 +14,6 @@ import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -32,14 +30,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
+import Draz.afinal.bkg_alram.AlarmHelper;
 import Draz.afinal.data.MyMessage.MyMessages;
 
 
@@ -276,7 +271,7 @@ public class Add_Message_Activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(Add_Message_Activity.this, "Succeeded to Add profile", Toast.LENGTH_SHORT).show();
                     //todo send message and phone
-                   AlarmHelper.setAlarm(Add_Message_Activity.this,time);
+                   AlarmHelper.setAlarm(Add_Message_Activity.this,time,messages);
                  finish();
 
                 }
@@ -354,16 +349,27 @@ public class Add_Message_Activity extends AppCompatActivity {
             }
         }
     }
-    private void sendSMS(String phoneNumber,String message) {
+    private void sendMessage() {
+        //get values from edit text
+        String sPhone=et_Contactphone.getText().toString().trim();
+        String sMessage = etText.getText().toString().trim();
+        // check condition
+        if (!sPhone.equals("") && !sMessage.equals(""))
+        {
+            //when both edit text value not equal to blank
+            //initialize sms message
+            SmsManager smsManager=SmsManager.getDefault();
+            //send text message
+            smsManager.sendTextMessage(sPhone,null,sMessage,null,null);
+            //display toast
+            Toast.makeText(getApplicationContext(),"SMS sent successfuly!",Toast.LENGTH_LONG).show();
+        }
 
+        else {
+            // when edit text value is blank
+            // display toast
+            Toast.makeText(getApplicationContext(),"Enter value first.", Toast.LENGTH_SHORT).show();
 
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
-            Toast.makeText(getApplicationContext(), "SMS sent successfully.", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Failed to send SMS.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
     }
 

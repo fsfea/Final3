@@ -20,12 +20,12 @@
         android:theme="@style/Theme.Final"
         tools:targetApi="31">
         <receiver
-            android:name=".MyMessagesReceiver"
+            android:name=".bkg_alram.MyMessagesReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
 
         <service
-            android:name=".MyMessageService"
+            android:name=".bkg_alram.MyMessageService"
             android:enabled="true"
             android:exported="true" />
 

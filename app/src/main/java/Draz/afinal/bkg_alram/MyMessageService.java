@@ -1,4 +1,4 @@
-package Draz.afinal;
+package Draz.afinal.bkg_alram;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -7,8 +7,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.telephony.SmsManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+
+import Draz.afinal.R;
 
 public class MyMessageService extends Service {
     public MyMessageService() {
@@ -18,11 +23,13 @@ public class MyMessageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("srvc","Service increate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         createNotificationChannel();
+        Log.d("srvc","Service onStartCommand");
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Foreground Service")
@@ -51,6 +58,29 @@ public class MyMessageService extends Service {
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
+        }
+    }
+    private void sendMessage( String sPhon,String sMessage) {
+        //get values from edit text
+        sPhon=sPhon.trim();
+         sMessage = sMessage.trim();
+        // check condition
+        if (!sPhon.equals("") && !sMessage.equals(""))
+        {
+            //when both edit text value not equal to blank
+            //initialize sms message
+            SmsManager smsManager=SmsManager.getDefault();
+            //send text message
+            smsManager.sendTextMessage(sPhon,null,sMessage,null,null);
+            //display toast
+            Toast.makeText(getApplicationContext(),"SMS sent successfuly!",Toast.LENGTH_LONG).show();
+        }
+
+        else {
+            // when edit text value is blank
+            // display toast
+            Toast.makeText(getApplicationContext(),"Enter value first.", Toast.LENGTH_SHORT).show();
+
         }
     }
     }

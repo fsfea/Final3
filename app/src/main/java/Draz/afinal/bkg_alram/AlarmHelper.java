@@ -1,25 +1,21 @@
-package Draz.afinal;
+package Draz.afinal.bkg_alram;
+
+import static android.app.PendingIntent.FLAG_MUTABLE;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import java.util.Calendar;
+import Draz.afinal.data.MyMessage.MyMessages;
 
 public class AlarmHelper {
-    public static void setAlarm(Context context,long timeMls) {
+    public static void setAlarm(Context context, long timeMls, MyMessages messages) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, MyMessagesReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-        // Set the alarm to start at a specific time (e.g., 8:00 AM)
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
-        calendar.set(Calendar.MINUTE, 0);
-
+        intent.putExtra("msg",messages);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, FLAG_MUTABLE);
         AlarmManager.AlarmClockInfo a=new AlarmManager.AlarmClockInfo(timeMls,pendingIntent);
         alarmManager.setAlarmClock(a, pendingIntent);
     }
