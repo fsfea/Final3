@@ -1,0 +1,341 @@
+@startuml
+class Draz.afinal.MainActivity {
+- FloatingActionButton fabAdd
+- SearchView srchV
+- Spinner spnrSubject
+- ListView lstvMsg
+- MyMessageAdabter messageAdabter
+- {static} int PERMISSION_REQUEST_CODE
+~ TimePicker alarmTimePicker
+~ PendingIntent pendingIntent
+~ AlarmManager alarmManager
+# void onCreate(Bundle)
++ void readMessagesFrom_FB()
++ boolean onCreateOptionsMenu(android.view.Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void showYesNoDialog()
++ void ShowPopUpMenu(View,MyMessages)
+# void onRestart()
+# void onResume()
+# void onPause()
+# void onStop()
+# void onDestroy()
++ void onRequestPermissionsResult(int,String[],int[])
+}
+
+note left of Draz.afinal.MainActivity::readMessagesFrom_FB()
+
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     
+end note
+note right of Draz.afinal.MainActivity::onRequestPermissionsResult(int,String[],int[])
+ Handle permission request result
+end note
+
+class Draz.afinal.data.MyMessage.MyMessages {
++ long keyid
++ String title
++ int importance
++ String text
++ String contact_name
++ String contact_phone
++ long time
++ boolean isCompleted
++ String mesjId
+- String uid
++ String phone
++ long getKeyid()
++ void setKeyid(long)
++ String getTitle()
++ void setTitle(String)
++ int getImportance()
++ void setImportance(int)
++ String getText()
++ void setText(String)
++ String getContact_name()
++ void setContact_name(String)
++ String getContact_phone()
++ void setContact_phone(String)
++ long getTime()
++ void setTime(long)
++ boolean isCompleted()
++ void setCompleted(boolean)
++ String getMesjId()
++ void setMesjId(String)
++ String getUid()
++ void setUid(String)
++ String getPhone()
++ void setPhone(String)
++ String toString()
+}
+note left of Draz.afinal.data.MyMessage.MyMessages::title
+عنوان الرسالة
+end note
+note right of Draz.afinal.data.MyMessage.MyMessages::importance
+درجة الاهمية 1-5
+end note
+note left of Draz.afinal.data.MyMessage.MyMessages::text
+نص الرسالة
+end note
+note right of Draz.afinal.data.MyMessage.MyMessages::contact_name
+ اسماء جهات الاتصال
+end note
+note left of Draz.afinal.data.MyMessage.MyMessages::contact_phone
+رقم الهاتف
+end note
+note right of Draz.afinal.data.MyMessage.MyMessages::isCompleted
+هل تمت الرسالة
+end note
+note left of Draz.afinal.data.MyMessage.MyMessages::mesjId
+رقم  الرسالة
+end note
+
+
+class Draz.afinal.Sign_IN {
+- TextInputEditText etShortTitle
+- TextInputEditText etPassword
+- Button btnSignUP
+- Button btnsignin
+# void onCreate(Bundle)
++ void onClickSignUp(View)
+- void checkEmailPassw_FB()
++ void onClickSign_In(View)
+}
+
+
+class Draz.afinal.data.MyMessage.MyMessageAdabter {
+- int itemLayout
+~ MyMessages messages
++ View getView(int,View,ViewGroup)
+- void delMyMessagesFromDB_FB(MyMessages)
+- void callAPhoneNumber(String)
++ void openSendSmsApp(String,String)
++ void openSendWhatsAppV2(String,String)
+}
+note left of Draz.afinal.data.MyMessage.MyMessageAdabter::itemLayout
+המזהה של קובץ עיצוב הפריט
+end note
+
+note left of Draz.afinal.data.MyMessage.MyMessageAdabter::getView(int,View,ViewGroup)
+
+     * בונה פריט גרפי אחד בהתאם לעיצוב והצגת נתוני העצם עליו
+     *
+     * @param position    מיקום הפריט החל מ 0
+     * @param convertView
+     * @param parent      רכיב האוסף שיכיל את הפריטים כמו listview
+     * @return . פריט גרפי שמציג נתוני עצם אחד
+     
+end note
+note right of Draz.afinal.data.MyMessage.MyMessageAdabter::delMyMessagesFromDB_FB(MyMessages)
+
+     * מחיקת פריט כולל התמונה מבסיס הנתונים
+     * @param myMessages הפריט שמוחקים
+     
+end note
+note left of Draz.afinal.data.MyMessage.MyMessageAdabter::callAPhoneNumber(String)
+
+     * @param phone מספר טלפון שרוצים להתקשר אליו
+     
+end note
+note right of Draz.afinal.data.MyMessage.MyMessageAdabter::openSendWhatsAppV2(String,String)
+
+     * פתיחת אפליקצית שליחת whatsapp
+     *
+     * @param msg   .. ההודעה שרוצים לשלוח
+     * @param phone
+     
+end note
+
+class Draz.afinal.Splash_Screen {
+# void onCreate(Bundle)
+# void onRestart()
+# void onResume()
+# void onPause()
+# void onStop()
+# void onDestroy()
+}
+
+class Draz.afinal.Edit_Message_Activity {
+- Button btnUpdate
+- Button BTNCancel
+- SeekBar skbrImportance
+- TextView tvImpoertance
+- TextInputEditText etShortTitle
+- TextInputEditText etText
+# void onCreate(Bundle)
+- void onClickUpdate(View)
++ void onClickCancel2(View)
+}
+
+
+interface Draz.afinal.data.usersTable.MyuserQuery {
+~ List<MyUser> getAll()
+~ List<MyUser> loadAllByIds(int[])
+~ MyUser checkEmailPassw(String,String)
+~ MyUser checkEmail(String)
+~ void insertAll(MyUser)
+~ void delete(MyUser)
+~ void delete(int)
+~ void insert(MyUser)
+~ void update(MyUser)
+}
+
+class Draz.afinal.Add_Message_Activity {
+- {static} int REQUEST_CONTACT
+- Button btnSave
+- Button BTNCancel
+- SeekBar skbrImportance
+- TextInputEditText etTitle
+- TextInputEditText etText
+- TextInputEditText etContact_name
+- TextInputEditText et_Contactphone
+- Button timePickerButton
+- TextView selectedTimeTextView
+- Button datePickerButton
+- TextView selectedDateTextView
+- {static} int REQUEST_READ_CONTACTS_PERMISSION
+- Calendar calendar
+# void onCreate(Bundle)
+- void showDatePickerDialog()
+- void showTimePickerDialog()
+- boolean hasContactsPermission()
+- void requestContactsPermission()
++ void onClickSave(View)
+- void checkMyMessage()
+- void savemessage(String,String,String,long,String)
++ void onClickCancel2(View)
++ void onRequestPermissionsResult(int,String[],int[])
++ void onActivityResult(int,int,Intent)
+- void sendMessage()
+}
+
+note left of Draz.afinal.Add_Message_Activity::requestContactsPermission()
+ has not been granted already
+end note
+
+interface Draz.afinal.data.MyMessage.MyMessagesQuery {
+}
+interface Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery {
+~ List<MyMessages> getAllMessages()
+~ void insertTask(MyMessages)
+~ void updateTask(MyMessages)
+~ void delereTasks(MyMessages)
+~ void delTaskById(long)
+}
+note left of Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery::getAllMessages()
+
+         * اعادة جميع معطيات جدول المهمات
+         *
+         * @return **قائمة من المهمات
+         
+end note
+note right of Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery::insertTask(MyMessages)
+
+         * ادخال مهمات
+         * @param t مجموعة مهمات
+         
+end note
+note left of Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery::updateTask(MyMessages)
+
+         * تعديل المهمات
+         * @param tasks مجموعة مهمات للتعديل (التعديل حسب المفتاح الرئيسي)
+         
+end note
+note right of Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery::delereTasks(MyMessages)
+
+         * حذف مهمة او مهمات
+         * @param tasks حذف المهمات (حسب المفتاح الرئيسي )
+         
+end note
+
+class Draz.afinal.Sign_Up {
+- Button btnUpdate
+- Button BTNCancel
+- TextInputEditText etname
+- TextInputEditText etphone
+- TextInputEditText etShortTitle
+- TextInputEditText etPassword
+- TextInputEditText etre_password
+# void onCreate(Bundle)
++ void onClickCancel(View)
+- void checkEmailPassw_FB()
++ void onClickSignUp(View)
+- void SaveUser_FB(String,String,String,String)
+}
+
+
+class Draz.afinal.bkg_alram.MyMessagesReceiver {
++ void onReceive(Context,Intent)
+}
+
+class Draz.afinal.bkg_alram.AlarmHelper {
++ {static} void setAlarm(Context,long,MyMessages)
++ {static} void cancelAlarm(Context)
+}
+
+class Draz.afinal.bkg_alram.MyMessageService {
+- {static} String CHANNEL_ID
++ void onCreate()
++ int onStartCommand(Intent,int,int)
++ IBinder onBind(Intent)
+- void createNotificationChannel()
+- void sendMessage(String,String)
+}
+
+
+class Draz.afinal.data.usersTable.MyUser {
++ long keyid
++ String fullName
++ String email
++ String phone
++ String passw
++ String key
++ String image
++ long getKeyid()
++ void setKeyid(long)
++ String getFullName()
++ void setFullName(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ String getPassw()
++ void setPassw(String)
++ String getKey()
++ void setKey(String)
++ String getImage()
++ void setImage(String)
++ String toString()
+}
+note top of Draz.afinal.data.usersTable.MyUser
+
+ * *واجهة تحوي عمليات على قاعدة البيانات
+ 
+end note
+
+note left of Draz.afinal.data.usersTable.MyUser::email
+ بحالة لم يتم اعطاء اسم للعامود يكون اسم الصفة اسم العامود
+end note
+note right of Draz.afinal.data.usersTable.MyUser::phone
+ رقم الهاتف
+end note
+note left of Draz.afinal.data.usersTable.MyUser::passw
+ الرقم السري
+end note
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.MainActivity
+java.io.Serializable <|.. Draz.afinal.data.MyMessage.MyMessages
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.Sign_IN
+android.widget.ArrayAdapter <|-- Draz.afinal.data.MyMessage.MyMessageAdabter
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.Splash_Screen
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.Edit_Message_Activity
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.Add_Message_Activity
+Draz.afinal.data.MyMessage.MyMessagesQuery +.. Draz.afinal.data.MyMessage.MyMessagesQuery$MyTasksQuery
+androidx.appcompat.app.AppCompatActivity <|-- Draz.afinal.Sign_Up
+android.content.BroadcastReceiver <|-- Draz.afinal.bkg_alram.MyMessagesReceiver
+android.app.Service <|-- Draz.afinal.bkg_alram.MyMessageService
+@enduml

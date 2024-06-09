@@ -1,0 +1,48 @@
+@startuml
+class MyMessageAdabter {
+- int itemLayout
+~ MyMessages messages
++ View getView(int,View,ViewGroup)
+- void delMyMessagesFromDB_FB(MyMessages)
+- void callAPhoneNumber(String)
++ void openSendSmsApp(String,String)
++ void openSendWhatsAppV2(String,String)
+}
+note left of MyMessageAdabter::itemLayout
+המזהה של קובץ עיצוב הפריט
+end note
+
+note left of MyMessageAdabter::getView(int,View,ViewGroup)
+
+     * בונה פריט גרפי אחד בהתאם לעיצוב והצגת נתוני העצם עליו
+     *
+     * @param position    מיקום הפריט החל מ 0
+     * @param convertView
+     * @param parent      רכיב האוסף שיכיל את הפריטים כמו listview
+     * @return . פריט גרפי שמציג נתוני עצם אחד
+     
+end note
+note right of MyMessageAdabter::delMyMessagesFromDB_FB(MyMessages)
+
+     * מחיקת פריט כולל התמונה מבסיס הנתונים
+     * @param myMessages הפריט שמוחקים
+     
+end note
+note left of MyMessageAdabter::callAPhoneNumber(String)
+
+     * @param phone מספר טלפון שרוצים להתקשר אליו
+     
+end note
+note right of MyMessageAdabter::openSendWhatsAppV2(String,String)
+
+     * פתיחת אפליקצית שליחת whatsapp
+     *
+     * @param msg   .. ההודעה שרוצים לשלוח
+     * @param phone
+     
+end note
+
+
+
+ArrayAdapter <|-- MyMessageAdabter
+@enduml
