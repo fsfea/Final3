@@ -16,11 +16,11 @@ public class MyMessages implements Serializable {
     public String text;//نص الرسالة
     public String contact_name;// اسماء جهات الاتصال
     public String  contact_phone;//رقم الهاتف
-    public long time ;
+    public long time ;//الوفت(الساعة/الدقائق)
     public boolean isCompleted;//هل تمت الرسالة
     public String mesjId;//رقم  الرسالة
     private String uid;
-    public String phone;
+    public String phone;//رقم الهاتف
     public long getKeyid() {
         return keyid;
     }

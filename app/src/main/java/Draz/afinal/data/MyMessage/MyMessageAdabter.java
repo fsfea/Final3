@@ -33,6 +33,9 @@ import java.net.URLEncoder;
 
 import Draz.afinal.R;
 
+/**
+ * hkjlhjkhk
+ */
 
 public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
     //המזהה של קובץ עיצוב הפריט
