@@ -16,12 +16,12 @@ public class MyUser {
         @PrimaryKey(autoGenerate = true)// تحديد الصفة كمفتاح رئيسي والذي ينتج بشكل تلقائي
         public long keyid;
     @ColumnInfo(name = "fullName")// اعطاء صفات جديد للعامود الصفة في الجدول
-    public String fullName;
+    public String fullName;//لاسم الكامل
     public String email;// بحالة لم يتم اعطاء اسم للعامود يكون اسم الصفة اسم العامود
     public String phone;// رقم الهاتف
     public String passw;// الرقم السري
     public String key ;
-    public String image;
+    public String image;//صورة
 
     public long getKeyid() {
         return keyid;

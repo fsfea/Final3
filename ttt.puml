@@ -1,0 +1,38 @@
+@startuml
+class Add_Message_Activity {
+- {static} int REQUEST_CONTACT
+- Button btnSave
+- Button BTNCancel
+- SeekBar skbrImportance
+- TextInputEditText etTitle
+- TextInputEditText etText
+- TextInputEditText etContact_name
+- TextInputEditText et_Contactphone
+- Button timePickerButton
+- TextView selectedTimeTextView
+- Button datePickerButton
+- TextView selectedDateTextView
+- {static} int REQUEST_READ_CONTACTS_PERMISSION
+- Calendar calendar
+# void onCreate(Bundle)
+- void showDatePickerDialog()
+- void showTimePickerDialog()
+- boolean hasContactsPermission()
+- void requestContactsPermission()
++ void onClickSave(View)
+- void checkMyMessage()
+- void savemessage(String,String,String,long,String)
++ void onClickCancel2(View)
++ void onRequestPermissionsResult(int,String[],int[])
++ void onActivityResult(int,int,Intent)
+- void sendMessage()
+}
+
+note left of Add_Message_Activity::requestContactsPermission()
+ has not been granted already
+end note
+
+
+
+AppCompatActivity <|-- Add_Message_Activity
+@enduml

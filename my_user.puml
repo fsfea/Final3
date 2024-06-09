@@ -1,0 +1,43 @@
+@startuml
+class MyUser {
++ long keyid
++ String fullName
++ String email
++ String phone
++ String passw
++ String key
++ String image
++ long getKeyid()
++ void setKeyid(long)
++ String getFullName()
++ void setFullName(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ String getPassw()
++ void setPassw(String)
++ String getKey()
++ void setKey(String)
++ String getImage()
++ void setImage(String)
++ String toString()
+}
+note top of MyUser
+
+ * *واجهة تحوي عمليات على قاعدة البيانات
+ 
+end note
+
+note left of MyUser::email
+ بحالة لم يتم اعطاء اسم للعامود يكون اسم الصفة اسم العامود
+end note
+note right of MyUser::phone
+ رقم الهاتف
+end note
+note left of MyUser::passw
+ الرقم السري
+end note
+
+
+@enduml

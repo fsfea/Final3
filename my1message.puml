@@ -1,0 +1,70 @@
+@startuml
+class MyMessages {
++ long keyid
++ String title
++ int importance
++ String text
++ String contact_name
++ String contact_phone
++ long time
++ boolean isCompleted
++ String mesjId
+- String uid
++ String phone
++ long getKeyid()
++ void setKeyid(long)
++ String getTitle()
++ void setTitle(String)
++ int getImportance()
++ void setImportance(int)
++ String getText()
++ void setText(String)
++ String getContact_name()
++ void setContact_name(String)
++ String getContact_phone()
++ void setContact_phone(String)
++ long getTime()
++ void setTime(long)
++ boolean isCompleted()
++ void setCompleted(boolean)
++ String getMesjId()
++ void setMesjId(String)
++ String getUid()
++ void setUid(String)
++ String getPhone()
++ void setPhone(String)
++ String toString()
+}
+note left of MyMessages::title
+عنوان الرسالة
+end note
+note right of MyMessages::importance
+درجة الاهمية 1-5
+end note
+note left of MyMessages::text
+نص الرسالة
+end note
+note right of MyMessages::contact_name
+ اسماء جهات الاتصال
+end note
+note left of MyMessages::contact_phone
+رقم الهاتف
+end note
+note right of MyMessages::time
+الوفت(الساعة/الدقائق)
+end note
+note left of MyMessages::isCompleted
+هل تمت الرسالة
+end note
+note right of MyMessages::mesjId
+رقم  الرسالة
+end note
+note left of MyMessages::phone
+رقم الهاتف
+end note
+
+
+
+
+Serializable <|.. MyMessages
+@enduml
