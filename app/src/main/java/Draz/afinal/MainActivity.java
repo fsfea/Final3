@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
       //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         fabAdd = findViewById(R.id.fabAdd);
+
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Add_Message_Activity.class);
-                startActivity(i);
+             gotoadd(v);
 
             }
         });
@@ -87,24 +87,18 @@ public class MainActivity extends AppCompatActivity {
             // Permission is not granted
             ActivityCompat.requestPermissions(this, new String[]{SCHEDULE_EXACT_ALARM}, PERMISSION_REQUEST_CODE);
         }
-        setContentView(R.layout.activity_main);
 
-      //  ListView listView = findViewById(R.id.listView);
-
-        // Get contact numbers
-        List<String> contactNumbers = ContactUtils.getContactNumbers(this);
-
-        // Display contacts in ListView using ArrayAdapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, contactNumbers);
-
-       // listView.setAdapter(adapter);
 
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);
         lstvMsg = findViewById(R.id.lstvMsg);
         Log.d("draz", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+    }
+
+    public void gotoadd(View v) {
+        Intent i = new Intent(MainActivity.this, Add_Message_Activity.class);
+        startActivity(i);
     }
 
     /**
@@ -229,38 +223,38 @@ public class MainActivity extends AppCompatActivity {
      * عملية تجهيز السبنر بالمواضيع
      */
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("draz", "ez");
-
-    }
-
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Log.d("draz", "ez");
+//
+//    }
+//
     @Override
     protected void onResume() {
         super.onResume();
         readMessagesFrom_FB();
 
     }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("EZ", "onpause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("EZ", "onstop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("EZ", "ondestroy");
-    }
+//
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Log.d("EZ", "onpause");
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        Log.d("EZ", "onstop");
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        Log.d("EZ", "ondestroy");
+//    }
     private void checkContactsPermission() {
         // Check for runtime permission
         if (ContextCompat.checkSelfPermission(this,READ_CONTACTS)
@@ -293,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         // Display contacts in ListView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, contactsList);
-        lstvMsg.setAdapter(adapter);
+       // lstvMsg.setAdapter(adapter);
     }
     // Handle permission request result
     @Override

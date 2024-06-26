@@ -24,7 +24,7 @@ public class AlarmHelper {
 
         intent.putExtra("phoneNumber", messages.getPhone());
         intent.putExtra("message", messages.getText());
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         // Set the alarm
         alarmManager.set(AlarmManager.RTC_WAKEUP, timeMls, pendingIntent);

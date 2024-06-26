@@ -20,11 +20,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/srchV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
+        </androidx.appcompat.widget.SearchView>
 
         <Spinner
             android:id="@+id/spnrSubject"

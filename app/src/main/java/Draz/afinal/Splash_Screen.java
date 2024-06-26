@@ -39,46 +39,46 @@ public class Splash_Screen extends AppCompatActivity
 
 
 
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-        Log.d("SD","onRestart" );
-        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        Log.d("SD","onResume" );
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        Log.d("SD","onPause" );
-        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        Log.d("SD","onStop" );
-        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        Log.d("SD","onDestroy" );
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-
-    }
+//    @Override
+//    protected void onRestart()
+//    {
+//        super.onRestart();
+//        Log.d("SD","onRestart" );
+//        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    protected void onResume()
+//    {
+//        super.onResume();
+//        Log.d("SD","onResume" );
+//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    protected void onPause()
+//    {
+//        super.onPause();
+//        Log.d("SD","onPause" );
+//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    protected void onStop()
+//    {
+//        super.onStop();
+//        Log.d("SD","onStop" );
+//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    protected void onDestroy()
+//    {
+//        super.onDestroy();
+//        Log.d("SD","onDestroy" );
+//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+//
+//    }
     
 }
 
