@@ -1,5 +1,6 @@
 package Draz.afinal;
 
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SCHEDULE_EXACT_ALARM;
 import static android.Manifest.permission.SEND_SMS;
 
@@ -13,10 +14,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -36,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 //import Draz.afinal.data.AppDatabase;
 import java.util.ArrayList;
+import java.util.List;
 
 import Draz.afinal.data.MyMessage.MyMessageAdabter;
 import Draz.afinal.data.MyMessage.MyMessages;
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spnrSubject;
     private ListView lstvMsg;
     private MyMessageAdabter messageAdabter;
-    private static final int PERMISSION_REQUEST_CODE = 1;
+    private static final int PERMISSION_REQUEST_CODE =79;
 
 
     TimePicker alarmTimePicker;
@@ -82,6 +87,19 @@ public class MainActivity extends AppCompatActivity {
             // Permission is not granted
             ActivityCompat.requestPermissions(this, new String[]{SCHEDULE_EXACT_ALARM}, PERMISSION_REQUEST_CODE);
         }
+        setContentView(R.layout.activity_main);
+
+      //  ListView listView = findViewById(R.id.listView);
+
+        // Get contact numbers
+        List<String> contactNumbers = ContactUtils.getContactNumbers(this);
+
+        // Display contacts in ListView using ArrayAdapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, contactNumbers);
+
+       // listView.setAdapter(adapter);
+
         spnrSubject = findViewById(R.id.spnrSubject);
         srchV = findViewById(R.id.srchV);
         lstvMsg = findViewById(R.id.lstvMsg);
@@ -243,16 +261,53 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("EZ", "ondestroy");
     }
+    private void checkContactsPermission() {
+        // Check for runtime permission
+        if (ContextCompat.checkSelfPermission(this,READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{READ_CONTACTS},
+                    PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission is already granted, extract contacts
+            extractContacts();
+        }
+    }
+    private void extractContacts() {
+        ArrayList<String> contactsList = new ArrayList<>();
+
+        // Query the Contacts content provider for contacts
+        Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, null, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+//                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+//                String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//                contactsList.add(name + ": " + phoneNumber);
+            }
+            cursor.close();
+        }
+
+        // Display contacts in ListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, contactsList);
+        lstvMsg.setAdapter(adapter);
+    }
     // Handle permission request result
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
+            // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
+                // Permission granted, extract contacts
+                extractContacts();
             } else {
                 // Permission denied
-                Toast.makeText(getApplicationContext(), "Permission denied. Can't send SMS.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -93,7 +93,7 @@ public class Sign_Up extends AppCompatActivity
                     if (task.isSuccessful()) {//אם הפעולה הצליחה
                         Toast.makeText(Sign_Up.this, "Signing up Succeeded", Toast.LENGTH_SHORT).show();
 
-                         SaveUser_FB(email,name,password,phone);
+                        SaveUser_FB(email,name,password,phone);
                     } else {
                         Toast.makeText(Sign_Up.this, "Signing up Faild", Toast.LENGTH_SHORT).show();
                         etShortTitle.setError(task.getException().getMessage());//הצגת הודעת השגיאה שהקבלה מהענן
