@@ -3,6 +3,7 @@ package Draz.afinal.data.MyMessage;
 import static android.Manifest.permission.CALL_PHONE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+import static androidx.core.app.ActivityCompat.invalidateOptionsMenu;
 import static androidx.core.app.ActivityCompat.requestPermissions;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
@@ -93,14 +94,14 @@ MyMessages messages=new MyMessages();
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callAPhoneNumber(current.phone);
+                callAPhoneNumber(current.contact_phone);
             }
         });
 
         btnSendSMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSendSmsApp(current.getText(), current.phone);
+                openSendSmsApp(current.getText(), current.contact_phone);
             }
         });
 
@@ -108,7 +109,7 @@ MyMessages messages=new MyMessages();
         btnwhtapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSendWhatsAppV2("msg to : ", current.getPhone());
+                openSendWhatsAppV2("msg to : ", current.getContact_phone());
             }
         });
         return vitem;
@@ -125,8 +126,11 @@ MyMessages messages=new MyMessages();
     {
         //הפנייה/כתובת  הפריט שרוצים למחוק
         FirebaseFirestore db=FirebaseFirestore.getInstance();
-        db.collection("MyUsers").document(myMessages.getUid()).
 
+                db.collection("MyUsers").
+                        document(myMessages.getUid()).
+                        collection("messages").
+                        document(myMessages.getMesjId()).
                 delete().//מאזין אם המחיקה בוצעה
                 addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -134,6 +138,7 @@ MyMessages messages=new MyMessages();
                 if(task.isSuccessful())
                 {
                     remove(myMessages);// מוחקים מהמתאם
+                    notifyDataSetChanged();
                     Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
                 }
             }

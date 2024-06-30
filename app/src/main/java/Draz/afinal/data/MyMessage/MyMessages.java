@@ -20,7 +20,6 @@ public class MyMessages implements Serializable {
     public boolean isCompleted;//هل تمت الرسالة
     public String mesjId;//رقم  الرسالة
     private String uid;
-    public String phone;//رقم الهاتف
     public long getKeyid() {
         return keyid;
     }
@@ -101,13 +100,7 @@ public class MyMessages implements Serializable {
         this.uid = uid;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     @Override
     public String toString() {
@@ -122,7 +115,6 @@ public class MyMessages implements Serializable {
                 ", isCompleted=" + isCompleted +
                 ", mesjId='" + mesjId + '\'' +
                 ", uid='" + uid + '\'' +
-                ", phone='" + phone + '\'' +
                 '}';
     }
 }

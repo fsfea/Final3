@@ -1,10 +1,12 @@
 package Draz.afinal;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.SCHEDULE_EXACT_ALARM;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -100,6 +102,13 @@ public class Add_Message_Activity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
+//        if(checkSelfPermission(SCHEDULE_EXACT_ALARM)==PackageManager.PERMISSION_DENIED)
+//        {
+//            String[] d1={SCHEDULE_EXACT_ALARM};
+//            Toast.makeText(this, "SCHEDULE_EXACT_ALARM PERMISSION_DENIED ", Toast.LENGTH_SHORT).show();
+//            requestPermissions(d1,100);
+//        }
+
 
     }
     private void showDatePickerDialog() {
@@ -272,7 +281,8 @@ public class Add_Message_Activity extends AppCompatActivity {
                     Toast.makeText(Add_Message_Activity.this, "Succeeded to Add profile", Toast.LENGTH_SHORT).show();
                     //todo send message and phone
                    AlarmHelper.setAlarm(Add_Message_Activity.this,time,messages);
-                 finish();
+
+                    finish();
 
                 }
                 else {

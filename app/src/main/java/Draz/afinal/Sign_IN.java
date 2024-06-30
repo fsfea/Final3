@@ -34,6 +34,7 @@ public class Sign_IN extends AppCompatActivity {
         {
             Intent i =new Intent(Sign_IN.this,MainActivity.class);
             startActivity(i);
+            finish();
         }
         etShortTitle = findViewById(R.id.etContact_phone);
         etPassword = findViewById(R.id.etText);
