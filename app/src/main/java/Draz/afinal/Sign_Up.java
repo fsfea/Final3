@@ -86,7 +86,7 @@ public class Sign_Up extends AppCompatActivity
         {
             //עצם לביצוע רישום كائن لعملية التسجيل
             FirebaseAuth auth=FirebaseAuth.getInstance();
-            //יצירתלחשבון בעזרת מיל ן סיסמא
+            //יצירת לחשבון בעזרת מיל ן סיסמא
             auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override//התגובה שמתקבל הניסיון הרישום בענן
                 public void onComplete(@NonNull Task<AuthResult> task) {//הפרמטר מכיל מידע מהשרת על תוצאת הבקשה לרישום

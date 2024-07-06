@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE =79;
 private TextView tvHistory;
 
-    TimePicker alarmTimePicker;
-    PendingIntent pendingIntent;
     AlarmManager alarmManager;
     private boolean isHistory=false;
 
@@ -75,6 +73,7 @@ private TextView tvHistory;
         spnrSubject = findViewById(R.id.spnrSubject);
       //  alarmTimePicker =  findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
         fabAdd = findViewById(R.id.fabAdd);
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -111,14 +110,7 @@ private TextView tvHistory;
         startActivity(i);
     }
 
-    /**
-     *  קריאת נתונים ממסד הנתונים firestore
-     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
-     */
-    /**
-     *  קריאת נתונים ממסד הנתונים firestore
-     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
-     */
+
     /**
      *  קריאת נתונים ממסד הנתונים firestore
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
@@ -180,6 +172,7 @@ private TextView tvHistory;
             Toast.makeText(this, "Edit_message", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(MainActivity.this, Edit_Message_Activity.class);
             startActivity(i);
+
         }
         if (item.getItemId() == R.id.itmSettings) {
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();

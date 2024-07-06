@@ -102,12 +102,6 @@ public class Add_Message_Activity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
-//        if(checkSelfPermission(SCHEDULE_EXACT_ALARM)==PackageManager.PERMISSION_DENIED)
-//        {
-//            String[] d1={SCHEDULE_EXACT_ALARM};
-//            Toast.makeText(this, "SCHEDULE_EXACT_ALARM PERMISSION_DENIED ", Toast.LENGTH_SHORT).show();
-//            requestPermissions(d1,100);
-//        }
 
 
     }
@@ -270,7 +264,7 @@ public class Add_Message_Activity extends AppCompatActivity {
 
         String id = db.collection("MyUsers").document(uid).collection("messages").document().getId();
         messages.setMesjId(id);
-        //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص   نجاح المطلوب
+        //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص الرسائل
         // معالج حدث لفحص هل تم المطلوب من قاعدة البيانات
         db.collection("MyUsers").document(uid).collection("messages").document(id).set(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
             //داله معالجه الحدث
@@ -279,7 +273,7 @@ public class Add_Message_Activity extends AppCompatActivity {
                 // هل تم تنفيذ المطلوب بنجاح
                 if (task.isSuccessful()) {
                     Toast.makeText(Add_Message_Activity.this, "Succeeded to Add profile", Toast.LENGTH_SHORT).show();
-                    //todo send message and phone
+
                    AlarmHelper.setAlarm(Add_Message_Activity.this,time,messages);
 
                     finish();
@@ -344,42 +338,12 @@ public class Add_Message_Activity extends AppCompatActivity {
                 cursor.moveToFirst();
                 String name = cursor.getString(0);
                 etContact_name.setText(name);
-//
-//                Cursor c = getContentResolver().query(contactUri, null, null, null, null);
-//                if (cursor.getCount() == 0) return;
-//                if (c.moveToFirst()) {
-//                    int phoneIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-//                    String num = c.getString(phoneIndex);
-//                    et_Contactphone.setText(num);
-//                }
+
             }
             finally
             {
                 cursor.close();
             }
-        }
-    }
-    private void sendMessage() {
-        //get values from edit text
-        String sPhone=et_Contactphone.getText().toString().trim();
-        String sMessage = etText.getText().toString().trim();
-        // check condition
-        if (!sPhone.equals("") && !sMessage.equals(""))
-        {
-            //when both edit text value not equal to blank
-            //initialize sms message
-            SmsManager smsManager=SmsManager.getDefault();
-            //send text message
-            smsManager.sendTextMessage(sPhone,null,sMessage,null,null);
-            //display toast
-            Toast.makeText(getApplicationContext(),"SMS sent successfuly!",Toast.LENGTH_LONG).show();
-        }
-
-        else {
-            // when edit text value is blank
-            // display toast
-            Toast.makeText(getApplicationContext(),"Enter value first.", Toast.LENGTH_SHORT).show();
-
         }
     }
 

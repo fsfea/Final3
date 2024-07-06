@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 public class MyMessages implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    public long keyid;// رقم المهمة
+    public long keyid;// رقم الرسالة
     public String title;//عنوان الرسالة
     public int importance;//درجة الاهمية 1-5
     public String text;//نص الرسالة

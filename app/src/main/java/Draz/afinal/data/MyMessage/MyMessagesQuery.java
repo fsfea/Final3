@@ -11,33 +11,33 @@ import java.util.List;
 public interface MyMessagesQuery {
     public interface MyTasksQuery {
         /**
-         * اعادة جميع معطيات جدول المهمات
+         * اعادة جميع معطيات جدول الرسائل
          *
-         * @return **قائمة من المهمات
+         * @return **قائمة من الرسائل
          */
         @Query ( "SELECT * FROM MYMESSAGES" )
         List<MyMessages> getAllMessages();
 
         /**
          * ادخال مهمات
-         * @param t مجموعة مهمات
+         * @param t مجموعة الرسائل
          */
         @Insert
         void insertTask(MyMessages...t);//استطيع ادخال كائن او مجموعة
 
         /**
          * تعديل المهمات
-         * @param tasks مجموعة مهمات للتعديل (التعديل حسب المفتاح الرئيسي)
+         * @param messages مجموعة الرسائل للتعديل (التعديل حسب المفتاح الرئيسي)
          */
         @Update
-        void updateTask(MyMessages ...tasks);
+        void updateTask(MyMessages ...messages);
 
         /**
-         * حذف مهمة او مهمات
-         * @param tasks حذف المهمات (حسب المفتاح الرئيسي )
+         * حذف رسالة او الرسائل
+         * @param messages حذف االرسائل (حسب المفتاح الرئيسي )
          */
         @Delete
-        void delereTasks(MyMessages...tasks);
+        void delereTasks(MyMessages...messages);
 
         @Query("DELETE FROM MyMessages WHERE keyid=:id")
         void delTaskById(long id);
