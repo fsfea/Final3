@@ -60,28 +60,7 @@ public class MyMessageService extends Service {
             manager.createNotificationChannel(serviceChannel);
         }
     }
-    private void sendMessage( String sPhon,String sMessage) {
-        //get values from edit text
-        sPhon=sPhon.trim();
-         sMessage = sMessage.trim();
-        // check condition
-        if (!sPhon.equals("") && !sMessage.equals(""))
-        {
-            //when both edit text value not equal to blank
-            //initialize sms message
-            SmsManager smsManager=SmsManager.getDefault();
-            //send text message
-            smsManager.sendTextMessage(sPhon,null,sMessage,null,null);
-            //display toast
-            Toast.makeText(getApplicationContext(),"SMS sent successfuly!",Toast.LENGTH_LONG).show();
-        }
 
-        else {
-            // when edit text value is blank
-            // display toast
-            Toast.makeText(getApplicationContext(),"Enter value first.", Toast.LENGTH_SHORT).show();
 
-        }
-    }
     }
 
