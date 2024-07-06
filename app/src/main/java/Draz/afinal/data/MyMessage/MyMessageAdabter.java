@@ -41,7 +41,7 @@ import Draz.afinal.R;
 public class MyMessageAdabter extends ArrayAdapter<MyMessages> {
     //המזהה של קובץ עיצוב הפריט
     private final int itemLayout;
-MyMessages messages=new MyMessages();
+//MyMessages messages=new MyMessages();
     /**
      * פעולה בונה מתאם
      *
@@ -87,7 +87,7 @@ MyMessages messages=new MyMessages();
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delMyMessagesFromDB_FB(messages);
+                delMyMessagesFromDB_FB(current);
             }
         });
 

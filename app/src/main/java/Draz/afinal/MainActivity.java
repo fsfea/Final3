@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.app.AlarmManager;
@@ -54,16 +55,19 @@ public class MainActivity extends AppCompatActivity {
     private ListView lstvMsg;
     private MyMessageAdabter messageAdabter;
     private static final int PERMISSION_REQUEST_CODE =79;
-
+private TextView tvHistory;
 
     TimePicker alarmTimePicker;
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
+    private boolean isHistory=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fabAdd = findViewById(R.id.fabAdd);
+        tvHistory=findViewById(R.id.tvHistory);
         srchV = findViewById(R.id.srchV);//הפניה לרכיב הגרפי שמציג אוסף
         messageAdabter = new MyMessageAdabter(this,R.layout.mymessage_item_layout);//בניית המתאם
         lstvMsg = findViewById(R.id.lstvMsg);
@@ -138,11 +142,16 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
                             //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
                             long current = Calendar.getInstance().getTimeInMillis();
-                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                           for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                 MyMessages messages = document.toObject(MyMessages.class);
                                 //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
-                                if (messages.getTime()>current){
+                                if (messages.getTime()>current) {
                                     arrayList.add(messages);
+                              }else
+
+                                if(isHistory){
+                                    arrayList.add(messages);
+
                                 }
 
                             }
@@ -180,6 +189,20 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "LogOut", Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
             finish();
+        }
+        if(item.getItemId() == R.id.itmHistory){
+            if(isHistory)
+            {
+                isHistory=false;
+                tvHistory.setVisibility(View.GONE);
+            }
+            else
+            {
+                isHistory=true;
+                tvHistory.setVisibility(View.VISIBLE);
+                tvHistory.setText("History");
+                messageAdabter.notifyDataSetChanged();;
+            }
         }
         return true;
     }
