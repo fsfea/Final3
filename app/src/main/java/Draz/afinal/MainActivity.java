@@ -4,6 +4,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SCHEDULE_EXACT_ALARM;
 import static android.Manifest.permission.SEND_SMS;
 import static android.Manifest.permission.SET_ALARM;
+import static android.Manifest.permission.USE_EXACT_ALARM;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -97,9 +98,10 @@ private TextView tvHistory;
         if (ContextCompat.checkSelfPermission(this,SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this,SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this,READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this,SET_ALARM) != PackageManager.PERMISSION_GRANTED ) {
+                ContextCompat.checkSelfPermission(this,SET_ALARM) != PackageManager.PERMISSION_GRANTED||
+        ContextCompat.checkSelfPermission(this,USE_EXACT_ALARM)!=PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-            ActivityCompat.requestPermissions(this, new String[]{SEND_SMS,SCHEDULE_EXACT_ALARM,READ_CONTACTS,SET_ALARM},200);
+            ActivityCompat.requestPermissions(this, new String[]{SEND_SMS,SCHEDULE_EXACT_ALARM,READ_CONTACTS,SET_ALARM,USE_EXACT_ALARM},200);
 
         }
 
