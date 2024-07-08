@@ -170,8 +170,12 @@ public class Add_Message_Activity extends AppCompatActivity {
     // has not been granted already
     private void requestContactsPermission()
     {
+        // التحقق مما إذا كان ليس لديك الإذن بالفعل
+
         if (!hasContactsPermission())
         {
+            // إذا كان ليس لديك الإذن، اطلبه من المستخدم
+
             ActivityCompat.requestPermissions(this,
                     new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS_PERMISSION);
         }
@@ -194,7 +198,7 @@ public class Add_Message_Activity extends AppCompatActivity {
         String title = etTitle.getText().toString();
 
 
-        int importancee=skbrImportance.getProgress();
+        int importance=skbrImportance.getProgress();
 
 
         if (title.length()<1)

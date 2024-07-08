@@ -18,7 +18,7 @@ public class AlarmHelper {
         Intent intent = new Intent(context, MyMessagesReceiver.class);
         intent.putExtra("msg",messages);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-//        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//
 
         AlarmManager.AlarmClockInfo a=new AlarmManager.AlarmClockInfo(timeMls,pendingIntent);
         alarmManager.setAlarmClock(a, pendingIntent);

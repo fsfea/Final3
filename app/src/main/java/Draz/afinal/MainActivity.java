@@ -121,11 +121,11 @@ private TextView tvHistory;
     {
         //استخراج الرقم المميز للمستعمل الذي سجل الدخول لاستعماله كاسم لل دوكيومينت
         String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //בניית רשימה ריקה
+        // بناء قائمة جديدة لتخزين الرسائل
         ArrayList<MyMessages> arrayList =new ArrayList<>();
-        //קבלת הפנייה למסד הנתונים
+        // الحصول على مرجع لقاعدة البيانات Firestore
         FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
-        //קישור לקבוצה collection שרוצים לקרוא
+        // الوصول إلى مجموعة الرسائل للمستخدم الحالي
         ffRef.collection("MyUsers").document(uid).collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     /**
                      * תגובה לאירוע השלמת קריאת הנתונים
@@ -133,9 +133,13 @@ private TextView tvHistory;
                      */
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
-                            //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
+                        // إذا تمت عملية جلب البيانات بنجاح
+                        // نقوم بالمرور على كل الوثائق وإضافتها إلى هيكل البيانات
+                        if(task.isSuccessful()) {
+
                             long current = Calendar.getInstance().getTimeInMillis();
+                            // هنا يمكنك تنفيذ العمليات على الرسائل التي تم جلبها من قاعدة البيانات
+                            // مثلاً، إضافتها إلى قائمة أو معالجتها بشكل إضافي
                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                 MyMessages messages = document.toObject(MyMessages.class);
                                 //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
@@ -287,18 +291,24 @@ private TextView tvHistory;
 
 
 
-    // Handle permission request result
+    // معالجة نتيجة طلب الإذن
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // التحقق مما إذا كان الطلب يتعلق بـ PERMISSION_REQUEST_CODE
+
         if (requestCode == PERMISSION_REQUEST_CODE) {
-            // If request is cancelled, the result arrays are empty.
+            // إذا تم إلغاء الطلب، ستكون مصفوفة النتائج فارغة
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, extract contacts
+                // تم منح الإذن، يمكنك استخراج جهات الاتصال هنا
+
 
             } else {
-                // Permission denied
+                // تم رفض الإذن
+
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
